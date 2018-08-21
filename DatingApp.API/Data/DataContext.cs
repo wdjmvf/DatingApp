@@ -10,5 +10,6 @@ namespace DatingApp.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Value> Values { get; set; } //เพิ่ม DbSet แล้วจะต้องไปบอกให้ service ใช้งาน DbContext ด้วย ที่ class Startup
         public DbSet<User> Users { get; set; }
+        public DbSet<Photo> Photos { get; set; } //เพิ่มนี้ตอน Section 8  Lecture 67
     }
 }
