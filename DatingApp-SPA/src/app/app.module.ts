@@ -5,12 +5,13 @@ import { AuthService } from './_services/auth.service';
 import { UserService } from './_services/user.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -23,8 +24,10 @@ import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberDetailResolver } from './_resolver/member-detail.resolver';
+import { MemberListResolver } from './_resolver/member-list.resolver';
 
-// Selection 9 lecture 86
+// Selection 9 lecture 86 แก้เรื่อง loin ครั้งแรกแล้ว token ยังไม่มี ก็เลยให้ get token ตั้งแต่แรกเลย
 export function tokenGetter() {
     return localStorage.getItem('token');
 }
@@ -44,11 +47,13 @@ export function tokenGetter() {
    imports: [
       // Section 5 Lecture 56 ใช้ dropdown link ของ bootstrap ไม่ใช่ jquery
       BsDropdownModule.forRoot(),
+      TabsModule.forRoot(),
       BrowserModule,
       HttpClientModule,
       FormsModule,
       // Section 5 Lecture 60 Routing
       RouterModule.forRoot(appRoutes),
+      NgxGalleryModule, // Section 9 Lecture 91 photo tab view
       // Selection 9 lecture 86
       JwtModule.forRoot({
           config: {
@@ -64,7 +69,10 @@ export function tokenGetter() {
       ErrorInterceptorProvider,
       AlertifyService,
       AuthGuard,
-      UserService
+      UserService,
+      // Section 9 Lecture 90
+      MemberDetailResolver,
+      MemberListResolver
    ],
    bootstrap: [
       AppComponent

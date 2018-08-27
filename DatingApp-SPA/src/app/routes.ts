@@ -1,3 +1,5 @@
+import { MemberListResolver } from './_resolver/member-list.resolver';
+import { MemberDetailResolver } from './_resolver/member-detail.resolver';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { AuthGuard } from './_guards/auth.guard';
 // Section 7 Lecture 60 เรื่อง Routing
@@ -14,9 +16,11 @@ export const appRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [ AuthGuard ],
         children: [
-            { path: 'members', component: MemberListComponent, },
+            { path: 'members', component: MemberListComponent,
+                resolve: { users: MemberListResolver } },
             // Section 9 Lecture 87 แสดง member detail และเอาค่า id ของ member มาตาก ActivatedRoute
-            { path: 'members/:id', component: MemberDetailComponent },
+            { path: 'members/:id', component: MemberDetailComponent,
+                resolve: { user: MemberDetailResolver } }, // Section 9 Lecture 90
             { path: 'messages', component: MessagesComponent },
             { path: 'lists', component: ListsComponent },
         ]
