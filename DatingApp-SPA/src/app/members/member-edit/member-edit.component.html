@@ -1,0 +1,78 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Your Profile</h1>
+    </div>
+    <div class="col-sm-8">
+      <div *ngIf="editForm.dirty" class="alert alert-info">
+        <strong>Information:</strong> You have made changes. Any unsaved changes will be lost!
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+        <div class="card-body">
+          <div>
+            <!-- ฟิลด์ไหนที่ไม่ใช่ require field จะใส่ ? ไว้เหมือนเป็นการ check if ถ้ามี ไม่งั้นถ้าค่าไม่มี จะ error ใน console browser * แต่ถ้าเราใช้ Resolver แล้วไม่จำเป็นต้องใส่ก็ได้เพราะจะไม่ Error แล้ว -->
+            <strong>Location:</strong>
+            <p>
+              {{user.city}},
+              {{user.country}}
+            </p>
+          </div>
+          <div>
+            <strong>Age:</strong>
+            <p>
+              {{user.age}}
+            </p>
+          </div>
+          <div>
+            <strong>Last Active:</strong>
+            <p>
+              {{user.lastActive}}
+            </p>
+          </div>
+          <div>
+            <strong>Member since:</strong>
+            <p>
+              {{user.created}}
+            </p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <!-- Section 10 Lecture 96 ตอนประมาน 3 นาที บอกว่าถ้า ปุ่มอยู่นอกฟอร์มเวลาเรากดมันจะไม่เกิดการ submit ให้ใช้วิธีเติม attribute form ที่ button แล้วใส่ค่าเป็น id ของ form ลงไป -->
+          <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tab-panel">
+        <tabset class="member-tabset">
+          <tab heading="Edit Profile">
+            <!-- Section 10 Lecture 96 editForm ใช้แสดง alert เมื่อ form dirty -->
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
+              <h4>Description</h4>
+              <textarea name="introduction" class="form-control" rows="6" [(ngModel)]="user.introduction"></textarea>
+              <h4>Looking For</h4>
+              <textarea name="lookingFor" class="form-control" rows="6" [(ngModel)]="user.lookingFor"></textarea>
+              <h4>Interests</h4>
+              <textarea name="interests" class="form-control" rows="6" [(ngModel)]="user.interests"></textarea>
+              <h4>Location Details</h4>
+              <div class="form-inline">
+                <label for="city">City</label>
+                <input name="city" type="text" class="form-control" [(ngModel)]="user.city">
+                <label for="country">Country</label>
+                <input name="country" type="text" class="form-control" [(ngModel)]="user.country">
+              </div>
+            </form>
+          </tab>
+          <tab heading="Edit Photos">
+            <p>Photo edit wil go here</p>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>

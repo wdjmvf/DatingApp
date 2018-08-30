@@ -4,6 +4,7 @@ import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
 import { UserService } from './_services/user.service';
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsaveChanges } from './_guards/prevent-unsaved-changes-guard';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
 
@@ -21,11 +22,13 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 import { RegisterComponent } from './register/register.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
 import { MemberListResolver } from './_resolver/member-list.resolver';
+import { MemberEditResolver } from './_resolver/member-edit.resolver';
 
 // Selection 9 lecture 86 แก้เรื่อง loin ครั้งแรกแล้ว token ยังไม่มี ก็เลยให้ get token ตั้งแต่แรกเลย
 export function tokenGetter() {
@@ -42,7 +45,8 @@ export function tokenGetter() {
       MessagesComponent,
       ListsComponent,
       MemberCardComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
+      MemberEditComponent
    ],
    imports: [
       // Section 5 Lecture 56 ใช้ dropdown link ของ bootstrap ไม่ใช่ jquery
@@ -70,9 +74,10 @@ export function tokenGetter() {
       AlertifyService,
       AuthGuard,
       UserService,
-      // Section 9 Lecture 90
-      MemberDetailResolver,
-      MemberListResolver
+      MemberDetailResolver, // Section 9 Lecture 90
+      MemberListResolver,
+      MemberEditResolver, // Section 10 Lecture 94
+      PreventUnsaveChanges
    ],
    bootstrap: [
       AppComponent
