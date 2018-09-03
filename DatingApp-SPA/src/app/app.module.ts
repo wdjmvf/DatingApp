@@ -1,3 +1,4 @@
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { appRoutes } from './routes';
 
 import { AlertifyService } from './_services/alertify.service';
@@ -5,15 +6,15 @@ import { AuthService } from './_services/auth.service';
 import { UserService } from './_services/user.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsaveChanges } from './_guards/prevent-unsaved-changes-guard';
-import { JwtModule } from '@auth0/angular-jwt';
-import { NgxGalleryModule } from 'ngx-gallery';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -46,9 +47,11 @@ export function tokenGetter() {
       ListsComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
+      FileUploadModule, // Section 11 Lecture 108 ng2-fileupload
       // Section 5 Lecture 56 ใช้ dropdown link ของ bootstrap ไม่ใช่ jquery
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
