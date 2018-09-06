@@ -1,0 +1,1 @@
+https://sqlperformance.com/2015/01/t-sql-queries/pagination-with-offset-fetch
