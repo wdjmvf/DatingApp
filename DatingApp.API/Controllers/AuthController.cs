@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.DTOs;
 using DatingApp.API.Models;
@@ -18,9 +19,11 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repository, IConfiguration configuration)
+        public AuthController(IAuthRepository repository, IConfiguration configuration, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
             _configuration = configuration;
         }
@@ -51,9 +54,11 @@ namespace DatingApp.API.Controllers
 
         //Section 3 lecture 32 บน udemy
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto){
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+        {
             var userFromRepo = await _repository.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
-            if(userFromRepo == null){
+            if (userFromRepo == null)
+            {
                 return Unauthorized();
             }
 
@@ -85,8 +90,13 @@ namespace DatingApp.API.Controllers
 
             //JWT token ที่จะส่งกลับไปให้ client
             var token = tokenHadler.CreateToken(tokenDescriptor);
-            return Ok(new {
-                token = tokenHadler.WriteToken(token)
+
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+            return Ok(new
+            {
+                token = tokenHadler.WriteToken(token),
+                user
             });
         }
     }
